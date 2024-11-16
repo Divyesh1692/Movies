@@ -1,42 +1,34 @@
-name: Node.js CI/CD
+name: CI/CD for E-Com
 
 on:
   push:
-    branches:
-      - main # Trigger on push to the 'main' branch
-  pull_request:
-    branches:
-      - main # Trigger on pull requests to the 'main' branch
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build_and_deploy:
+    runs-on: windows-latest
 
     steps:
-    # Checkout the repository
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    # Setup Node.js
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '16' # Set your required Node.js version
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
 
-    # Install dependencies
-    - name: Install dependencies
-      run: npm install
+      - name: install dependencies
+        run: npm install
 
-    # Run tests (optional: if you have tests in your project)
-    - name: Run tests
-      run: npm test
+      # - name: Build Project
+      #   run: npm run build
 
-    # Build the application (if applicable)
-    - name: Build project
-      run: npm run build # Skip if not using a build step
-
-    # Deploy application (optional)
-    # - name: Deploy to Heroku or Render
-    #   if: github.event_name == 'push'
-    #   run: |
-    #     echo "Deployment steps go here" # Replace this with actual deployment steps
+      # - name: Deploy to Github Pages
+      #   uses: JamesIves/github-pages-deploy-action@4.1.0
+      #   with:
+      #     branch: master
+      #     folder: build
