@@ -1,36 +1,32 @@
-name: Deploy to GitHub Pages
+# The name of the project.
+name: Movies-backend
 
-on:
-  push:
-    branches:
-      - main # Trigger deployment on push to 'main' branch
+# The version of the project.
+version: 1.0.0
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+# The description of the project.
+description: A backend for a movie website.
 
-    steps:
-      # Checkout the repository
-      - name: Checkout code
-        uses: actions/checkout@v3
+# The author of the project.
+author: Divyesh1692
 
-      # Setup Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "16"
+# The dependencies of the project.
+dependencies:
+  express: "^4.18.1"
+  mongoose: "^6.1.1"
 
-      # Install dependencies
-      - name: Install dependencies
-        run: npm install
+# The scripts for the project.
+scripts:
+  start: node index.js
+  test: jest
 
-      # Build the project
-      - name: Build project
-        run: npm run build
+# The environment variables for the project.
+environment:
+  NODE_ENV: production
 
-      # Deploy to GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+# The deployment configuration for the project.
+deployment:
+  provider: github
+  repo: Movies
+  branch: main
+  deploy_path: /
